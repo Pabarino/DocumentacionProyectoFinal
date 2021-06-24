@@ -1,0 +1,166 @@
+CREATE TABLE Juegos
+(
+  idJuego INT NOT NULL AUTO_INCREMENT,
+  nombre VARCHAR(255) NOT NULL,
+  imagen VARCHAR(255) NOT NULL,
+  fechaSalida DATE NOT NULL,
+  sinopsis TEXT NOT NULL,
+  desarrolladora VARCHAR(255) NOT NULL,
+  distribuidora VARCHAR(255) NOT NULL,
+  video VARCHAR(255) NOT NULL,
+  enlaceCompra VARCHAR(255) NOT NULL,
+  PRIMARY KEY (idJuego)
+);
+
+CREATE TABLE Usuarios
+(
+  idUsuario INT NOT NULL AUTO_INCREMENT,
+  password VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  apodo VARCHAR(255) NOT NULL,
+  imagen VARCHAR(255) NOT NULL,
+  PRIMARY KEY (idUsuario)
+);
+
+CREATE TABLE Generos
+(
+  idGenero VARCHAR(255) NOT NULL,
+  PRIMARY KEY (idGenero)
+);
+
+CREATE TABLE Plataformas
+(
+  idPlataforma VARCHAR(255) NOT NULL,
+  PRIMARY KEY (idPlataforma)
+);
+
+CREATE TABLE Juegos_generos
+(
+  idJuego INT NOT NULL,
+  idGenero VARCHAR(255) NOT NULL,  
+  PRIMARY KEY (idJuego, idGenero),
+  FOREIGN KEY (idGenero) REFERENCES Generos(idGenero),
+  FOREIGN KEY (idJuego) REFERENCES Juegos(idJuego)
+);
+
+CREATE TABLE Juegos_plataformas
+(
+  idJuego INT NOT NULL,
+  idPlataforma VARCHAR(255) NOT NULL,
+  PRIMARY KEY (idJuego, idPlataforma),
+  FOREIGN KEY (idJuego) REFERENCES Juegos(idJuego),
+  FOREIGN KEY (idPlataforma) REFERENCES Plataformas(idPlataforma)
+);
+
+CREATE TABLE Interes
+(  
+  idUsuario INT NOT NULL,
+  idJuego INT NOT NULL,
+  PRIMARY KEY (idUsuario, idJuego),
+  FOREIGN KEY (idJuego) REFERENCES Juegos(idJuego),
+  FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario)
+);
+
+INSERT INTO Juegos (nombre, imagen, fechaSalida, sinopsis, desarrolladora, distribuidora, video, enlaceCompra) 
+VALUES 
+('Mario Golf Super Rush', 'https://images-na.ssl-images-amazon.com/images/I/A1v34AZ--WL._SL1500_.jpg', '2021-06-25', 'Comienza la diversión con hasta tres jugadores* más jugando simultáneamente y compite a través del campo de golf para ser el primero en embocar la bola en el hoyo. Supera e interrumpe a tus oponentes con carreras y golpes especiales. ¡Yoshi podrá acelerar sobre un huevo gigante y el Rey Bob-omba puede llenar el green con explosiones! En Batalla de golf, ten cuidado con obstáculos como los Don Pisotón, los Chomp Cadenas y las cáscaras de plátano mientras navegas por el Estadio de Supergolf.', 'Camelot Software Planning', 'Nintendo', 'https://youtu.be/XNchndJI3gA', 'https://www.amazon.es/SWITCH-Mario-Golf-Super-Rush/dp/B08WY8JGPG'),
+('Legend of Zelda: Skyward Sword HD', 'https://images-na.ssl-images-amazon.com/images/I/71JLhcez40L._AC_SL1377_.jpg', '2021-07-26', 'The Legend of Zelda Skyward Sword HD -así se llama esta versión remasterizada del clásico de Nintendo Wii- es un juego de rol y acción en tercera persona d ela saga Zelda que incluye varios cambios con respecto al original, algo que se nota sobre todo en los esquemas de controles, que ahora permiten jugarlo también sin necesidad de control por movimiento, y en los gráficos, cuya calidad se ha mejorado para alcanzar la alta definición. ', 'Nintendo', 'Nintendo', 'http://dummyimage.com/247x100.png/ff4444/ffffff', 'https://www.amazon.es/SWITCH-Legend-Zelda-Skyward-Sword/dp/B08WXX587M'),
+('Neo: The World Ends With You', 'https://live.staticflickr.com/65535/51101738807_b13c64479e_h.jpg', '2021-07-17', 'NEO: The World Ends with You transporta a los jugadores a las calles de Shibuya, donde participarán en el "Juego de los segadores", una batalla a vida o muerte por la supervivencia. Los jugadores asumirán el papel de Rindo mientras exploran el corazón de Tokio para descubrir los misterios detrás del siniestro juego en el que se han visto obligados a participar', 'Square Enix', 'Square Enix', 'https://youtu.be/Hr5GgPi4Rsg', 'https://www.game.es/neo-the-world-ends-with-you-nintendo-switch-188882'),
+('No More Heroes 3', 'https://s1.gaming-cdn.com/images/products/5955/orig/no-more-heroes-3-cover.jpg', '2021-08-27', 'Travis Touchdown regresa a Santa Destroy después de diez largos años de ausencia. Allí encontrará una metrópolis gigante sobre una isla artificial que se erige en el mar y un misterioso objeto que flota sobre ella. ¿A qué tipo de peligrosos (y locos) asesinos se enfrentará Travis esta vez? ', 'Grasshopper Manufacture', 'Grasshopper Manufacture', 'https://youtu.be/-eVRwSrzkEg', 'https://www.game.es/no-more-heroes-3-nintendo-switch-187436'),
+('Warioware: Get It Together!', 'https://upload.wikimedia.org/wikipedia/en/6/6a/Get_It_Together_cover_art.jpg', '2021-09-10', 'Atrévete con más de 200 extravagantes y frenéticos microjuegos, ya sea en solitario o en compañía de un amigo.', 'Nintendo', 'Nintendo', 'https://youtu.be/kxk6ijyr5Wk', 'https://www.nintendo.com/es_LA/games/detail/warioware-get-it-together-switch/'),
+('Deathloop', 'https://image.api.playstation.com/vulcan/ap/rnd/202007/1617/Fv4asO4zbdqL83hiL9COTlWZ.png', '2021-09-14', 'DEATHLOOP transporta a los jugadores a la isla sin ley de Arrecife Negro, en la que dos asesinos extraordinarios libran una lucha sin fin. Explora un entorno impresionante y unos niveles diseñados hasta el más mínimo detalle que te harán disfrutar de una experiencia envolvente en la que podrás abordar cualquier situación a tu antojo. ', 'Arkane Studios', 'Bethesda', 'https://youtu.be/mc2hz3LJhTY', 'https://www.game.es/deathloop-pc-software-185236'),
+('Far Cry 6', 'https://static1-es.millenium.gg/articles/1/24/59/1/@/114525-image-article_m-1.png', '2021-10-07', 'Como dictador de Yara, Antón Castillo está decidido a devolver a su nación la antigua gloria perdida por cualquier medio, y su hijo Diego sigue sus sangrientos pasos. Su despiadada opresión ha prendido la llama de la revolución. La isla de Yara recibió inspiración de Cuba, donde el jugador controlará a Dani Rojas, un soldado Yaran que forma parte del grupo que busca ir en contra de Anton Castillo, interpretado por Giancarlo Esposito, de Breaking Bad.
+ ', 'Ubisoft', 'Ubisoft', 'https://youtu.be/BwiWNKWfF5Q', 'https://www.game.es/far-cry-6-yara-edition-playstation-5-182520'),
+('Battlefield 2042', 'https://s1.gaming-cdn.com/images/products/6690/orig/battlefield-2042-cover.jpg', '2021-10-22', 'Te presentamos el nuevo Battlefield 2042, un shooter en primera persona que marca el regreso a la emblemática guerra total de la franquicia. En un mundo en el futuro cercano transformado por el desorden, adáptate y sobrevive con la ayuda de tu patrulla y un arsenal de vanguardia en campos de batalla en constante cambio.', 'EA', 'EA', 'https://youtu.be/dTTGThC4aes', 'https://www.game.es/battlefield-2042-playstation-4-190835'),
+('Guardians of the Galaxy', 'https://terrigen-cdn-dev.marvel.com/content/prod/1x/_gotg_card_6.jpg', '2021-10-26', 'Dale caña y surca el cosmos con una nueva versión de Marvel’s Guardians of the Galaxy. En esta aventura de acción en tercera persona encarnas a Star-Lord, un cuestionable líder muy echado para adelante que ha conseguido convencer a un estrafalario grupo de insólitos héroes para que se unan a él. Un notas (que no eres tú, clarísimamente) ha desencadenado una serie de catastróficos eventos, y solo tú puedes mantener unidos a los impredecibles Guardianes el tiempo suficiente para evitar el colapso interplanetario.', 'Eidos Montréal', 'Square Enix', 'https://youtu.be/3PnAnIT4f68', 'https://www.game.es/VIDEOJUEGOS/ACCION/PLAYSTATION-5/MARVELS-GUARDIANS-OF-THE-GALAXY/189985'),
+('Age of Empires IV', 'https://as01.epimg.net/meristation/imagenes/2021/06/13/cover/9090641623615616.jpg', '2021-10-28', 'Uno de los juegos de estrategia en tiempo real más queridos vuelve a demostrar todo su esplendor con Age of Empires IV, donde serás la estrella de las épicas batallas históricas que moldearon el mundo que hoy conocemos. Age of Empires IV combina lo que ya le funcionó en su momento con fórmulas innovadoras para que disfrutes expandiendo tu imperio hasta donde alcancen tus ojos; todo ello con una impresionante fidelidad visual en 4K. En resumen, un juego de estrategia en tiempo real modernizado y adaptado a la nueva generación.', 'Worlds Edge', 'Xbox Game Studios', 'https://youtu.be/h1-o_BFOCJQ', 'https://store.steampowered.com/app/1466860/Age_of_Empires_IV/'),
+('Forza Horizon 5', 'https://store-images.s-microsoft.com/image/apps.45837.13806078025361171.f5cba546-c7a9-4081-8436-ef97124f433e.dcf6ce70-ac42-46f8-86de-1b5863191121', '2021-11-09', 'Forza Horizon 5 nos llevara a México, donde nos despliega un mundo abierto variado, repleto de elementos y con cambios en la meteorología, lo que ofrece una experiencia de conducción en la que manejar el vehículo es solo uno de sus muchos elementos.', 'Plaground Games', 'Plaground Games', 'https://youtu.be/2uIduK5OpgM', 'https://www.game.es/VIDEOJUEGOS/CONDUCCION/XBOX-ONE/FORZA-HORIZON-5/191038'),
+('Metroid Dread', 'https://assets-prd.ignimgs.com/2021/06/15/metroid-dread-1623788629212.jpg', '2021-10-08', 'La historia de Samus continúa tras los acontecimientos de Metroid Fusion cuando aterriza en el planeta ZDR para investigar una misteriosa transmisión enviada a la Federación Galáctica. Este planeta remoto está totalmente dominado por agresivas formas de vida alienígena y seres mecánicos aterradores. Samus es más ágil que nunca, pero ¿logrará escapar de las garras de la amenaza inhumana que merodea por las profundidades de ZDR?', 'MercurySteam', 'Nintendo', 'https://youtu.be/DblEVIzOuS8', 'https://metroid.nintendo.com/es/');
+
+INSERT INTO Usuarios (password, email, apodo, imagen)
+VALUES 
+('pass123', 'user@mail.com', 'Userino', 'https://www.worldfuturecouncil.org/wp-content/uploads/2020/06/blank-profile-picture-973460_1280-1.png');
+
+INSERT INTO Plataformas (idPlataforma)
+VALUES 
+('PlayStation 4'),
+('Xbox One'),
+('PlayStation 5'),
+('Xbox X'),
+('Nintendo Switch'),
+('Microsoft Windows');
+
+INSERT INTO Generos (idGenero)
+VALUES 
+('Accion'),
+('Multijugador'),
+('RPG'),
+('Aventura'),
+('Horror'),
+('Estrategia'),
+('Deportes'),
+('Simulacion'),
+('FPS');
+
+INSERT INTO Juegos_generos (idJuego, idGenero)
+VALUES 
+('1', 'Simulacion'),
+('1', 'Deportes'),
+('2', 'Accion'),
+('2', 'Aventura'),
+('3', 'RPG'),
+('4', 'Accion'),
+('4', 'Aventura'),
+('5', 'Accion'),
+('6', 'Accion'),
+('6', 'FPS'),
+('6', 'Aventura'),
+('7', 'Accion'),
+('7', 'Aventura'),
+('7', 'FPS'),
+('8', 'Accion'),
+('8', 'FPS'),
+('9', 'Accion'),
+('9', 'Aventura'),
+('10', 'Estrategia'),
+('11', 'Simulacion'),
+('11', 'Deportes'),
+('12', 'Accion'),
+('12', 'Aventura');
+
+INSERT INTO Juegos_plataformas (idJuego, idPlataforma)
+VALUES 
+('1', 'Nintendo Switch'),
+('2', 'Nintendo Switch'),
+('5', 'Nintendo Switch'),
+('12', 'Nintendo Switch'),
+('3', 'Nintendo Switch'),
+('3', 'PlayStation 4'),
+('3', 'Microsoft Windows'),
+('4', 'Nintendo Switch'),
+('6', 'PlayStation 5'),
+('6', 'Microsoft Windows'),
+('7', 'Microsoft Windows'),
+('7', 'PlayStation 4'),
+('7', 'PlayStation 5'),
+('7', 'Xbox One'),
+('7', 'Xbox X'),
+('8', 'Microsoft Windows'),
+('8', 'PlayStation 4'),
+('8', 'PlayStation 5'),
+('8', 'Xbox One'),
+('8', 'Xbox X'),
+('9', 'Microsoft Windows'),
+('9', 'PlayStation 4'),
+('9', 'PlayStation 5'),
+('9', 'Xbox One'),
+('9', 'Xbox X'),
+('10', 'Microsoft Windows'),
+('11', 'Xbox One'),
+('11', 'Xbox X'),
+('11', 'Microsoft Windows');
+
+INSERT INTO Interes (idUsuario, idJuego)
+VALUES
+('1', '2'),
+('1', '7');
